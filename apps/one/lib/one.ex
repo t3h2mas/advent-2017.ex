@@ -7,7 +7,6 @@ defmodule One do
         |> String.graphemes 
         |> Enum.map(fn x -> String.to_integer(x) end)
         |> Enum.with_index
-    [first | _ ] = l
     l
       |> Enum.filter(fn x ->
           {val, i} = x
@@ -15,7 +14,7 @@ defmodule One do
             {:ok, next} ->
               next
             :error -> 
-              first
+              Enum.at(l, 0)
           end
 
           {nval, _} = n
@@ -26,6 +25,5 @@ defmodule One do
         val
       end)
       |> Enum.sum
-
   end
 end
