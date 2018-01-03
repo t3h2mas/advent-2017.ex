@@ -46,4 +46,51 @@ defmodule Two do
       end)
     |> Enum.reduce(fn(cur, acc) -> cur + acc end)
   end
+
+  # part two
+  
+  def permutations(arr) do
+    arr 
+    |> Enum.flat_map(fn x -> 
+      Enum.map(arr, fn y ->
+        max = Enum.max([x, y])
+        min = Enum.min([x, y])
+        {max, min}
+      end)
+    end)
+    |> Enum.filter(fn {x, y} -> x != y end)
+    |> Enum.uniq
+  end
+
+  def sum_divisible(arr) do
+    arr
+    |> Enum.reduce(0, fn({x, y}, acc) ->
+      case rem(x, y) == 0 do
+        :true -> acc + (x / y)
+        :false -> acc
+      end
+    end)
+  end
+
+  def checksum_line(line) do
+    line
+    |> permutations
+    |> sum_divisible
+    |> round
+  end
+  
+  def checksum2(cells) do
+    cells 
+    |> Enum.map(&checksum_line/1)
+    |> Enum.sum
+  end
+
+  def solve_two do
+    case File.read(@input_file) do
+      {:ok, body} ->
+        checksum2(mapify(body))
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
 end

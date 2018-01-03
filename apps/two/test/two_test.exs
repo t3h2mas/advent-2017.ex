@@ -13,4 +13,8 @@ defmodule TwoTest do
     seed = [[5, 4, 3], [10, 1, 2]]
     assert Two.checksum(seed) == 11
   end
+
+  test "permutations/1 makes a list of possible combinations as tuples" do
+    assert Two.permutations([1, 2]) == [{1, 1}, {1, 2}, {2, 1}, {2, 2}]
+  end
 end
