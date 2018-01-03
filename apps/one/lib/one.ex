@@ -52,4 +52,29 @@ defmodule One do
     end
     worker(tail, acc, start_head)
   end
+
+  # part two
+
+  def halve(arr) do
+    Enum.chunk_every(arr, round(length(arr) / 2)) 
+  end
+
+  def str_to_list(s) do
+    s |> Integer.to_string |> String.graphemes |> Enum.map(&String.to_integer/1)
+  end
+
+  def captcha3(input) do
+    input 
+    |> str_to_list
+    |> halve
+    |> Enum.zip
+    |> Enum.reduce(0, fn ({a, b}, acc) -> 
+      case a == b do
+        :true ->
+          acc + a + b
+        :false ->
+          acc
+      end
+    end)
+  end
 end
