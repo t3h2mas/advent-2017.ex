@@ -14,7 +14,6 @@ defmodule Five do
     end
   end
 
-
   @doc """
   Parse columnar list string `jumps` into list of integers
   """
@@ -28,26 +27,29 @@ defmodule Five do
     end)
   end
 
-  @doc """
-  Take the `jumps` list and pass default parameters to cycle_jumps/3
-  """
-  def cycle_jumps(jumps) do
+  defp cond_inc_or_dec(val) do
+    case val > 2 do
+      :true -> val - 1
+      :false -> val + 1
+    end
+  end
+
+  defp always_inc(x) do
+    x + 1
+  end
+
+  def cycle_jumps(jumps, inc_f) do
     start_index = 0
     step = 0
 
-    cycle_jumps(jumps, start_index, step) 
+    cycle_jumps(jumps, start_index, step, inc_f)
   end
 
-  @doc """
-  Take `jumps`, `index`, `step` and either 
-    generate the next state
-    or return the steps taken
-  """
-  def cycle_jumps(jumps, index, step) do
+  def cycle_jumps(jumps, index, step, inc_f) do
     case Enum.fetch(jumps, index) do
       {:ok, pointer_val} ->
-        next_jumps = List.replace_at(jumps, index, pointer_val + 1)
-        cycle_jumps(next_jumps, index + pointer_val, step + 1)
+        next_jumps = List.replace_at(jumps, index, inc_f.(pointer_val))
+        cycle_jumps(next_jumps, index + pointer_val, step + 1, inc_f)
       :error -> step
     end
   end
@@ -56,54 +58,29 @@ defmodule Five do
     read_input_file() |> solve_part_one
   end
 
+  @doc """
+  solve part one by passing `always_inc`/1 as the increment func
+  """
   def solve_part_one(str) do 
     str
     |> parse_jumps
-    |> cycle_jumps
-  end
-
-  #
-  # part two
-  #
-
-  @doc """
-  Take the `jumps` list and pass default parameters to cycle_jumps2/3
-  """
-  def cycle_jumps2(jumps) do
-    start_index = 0
-    step = 0
-
-    cycle_jumps2(jumps, start_index, step) 
-  end
-
-  def cond_inc_or_dec(val) do
-    case val > 2 do
-      :true -> val - 1
-      :false -> val + 1
-    end
-  end
-
-  @doc """
-  Take `jumps`, `index`, `step` and either 
-    generate the next state
-    or return the steps taken
-  """
-  def cycle_jumps2(jumps, index, step) do
-    case Enum.fetch(jumps, index) do
-      {:ok, pointer_val} ->
-        next_jumps = List.replace_at(jumps, index, cond_inc_or_dec(pointer_val))
-        cycle_jumps2(next_jumps, index + pointer_val, step + 1)
-      :error -> step
-    end
+    |> (fn x ->
+          cycle_jumps(x, &always_inc/1)
+        end).()
   end
 
   def solve_part_two do
     read_input_file() |> solve_part_two
   end
 
+  @doc """
+  solve part two by passing `cond_inc_or_dec`/1 as the increment func
+  """
   def solve_part_two(str) do 
     str
     |> parse_jumps
-    |> cycle_jumps2
+    |> (fn x ->
+          cycle_jumps(x, &cond_inc_or_dec/1)
+    end).()
   end
 end
