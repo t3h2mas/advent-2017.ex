@@ -8,4 +8,7 @@ defmodule FiveTest do
   test "solve_part_one" do
     assert Five.solve_part_one("0 \n3 \n0 \n1 \n-3") == 5
   end
+  test "solve_part_two" do
+    assert Five.solve_part_two("0 \n3 \n0 \n1 \n-3") == 10
+  end
 end
