@@ -15,6 +15,9 @@ defmodule Five do
   end
 
 
+  @doc """
+  Parse columnar list string `jumps` into list of integers
+  """
   def parse_jumps(jumps) do
     jumps
     |> String.split("\n", trim: :true)
@@ -25,6 +28,9 @@ defmodule Five do
     end)
   end
 
+  @doc """
+  Take the `jumps` list and pass default parameters to cycle_jumps/3
+  """
   def cycle_jumps(jumps) do
     start_index = 0
     step = 0
@@ -32,6 +38,11 @@ defmodule Five do
     cycle_jumps(jumps, start_index, step) 
   end
 
+  @doc """
+  Take `jumps`, `index`, `step` and either 
+    generate the next state
+    or return the steps taken
+  """
   def cycle_jumps(jumps, index, step) do
     case Enum.fetch(jumps, index) do
       {:ok, pointer_val} ->
