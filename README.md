@@ -2,7 +2,7 @@
 Advent of Code challenges and playing with Elixir
 
 ## structure
-setup as an [umbrella](https://elixir-lang.github.io/getting-started/mix-otp/dependencies-and-umbrella-apps.html#umbrella-projects) app
+set up as an [umbrella](https://elixir-lang.github.io/getting-started/mix-otp/dependencies-and-umbrella-apps.html#umbrella-projects) app
 
 
 so click your way on into a challenge in the `apps` directory
