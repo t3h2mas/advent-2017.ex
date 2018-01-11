@@ -1,5 +1,5 @@
 # Advent.ex 2017
-Advent of Code challenges and playing with Elixir
+Advent of Code [challenges](http://adventofcode.com/) and Elixir play
 
 ## structure
 set up as an [umbrella](https://elixir-lang.github.io/getting-started/mix-otp/dependencies-and-umbrella-apps.html#umbrella-projects) app
